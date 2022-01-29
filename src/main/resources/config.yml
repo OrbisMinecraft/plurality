@@ -1,0 +1,3 @@
+storage:
+  method: file # or mysql
+  url: 'jdbc:mariadb://plurality:plurality@localhost/plurality' # only required for the MySQL storage driver

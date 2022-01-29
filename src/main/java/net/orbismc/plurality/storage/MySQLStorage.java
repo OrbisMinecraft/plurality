@@ -26,6 +26,7 @@ public class MySQLStorage extends Storage {
 	@Override
 	public void init(@NotNull ConfigurationNode config) throws Exception {
 		final var url = config.getNode("url").getString(null);
+		final var table = config.getNode("table").getString("plurality");
 		if (url == null) throw new RuntimeException("No database URL provided");
 
 		pool = new MariaDbPoolDataSource(url);
@@ -36,7 +37,7 @@ public class MySQLStorage extends Storage {
 
 		// make sure the required table exists
 		try (final var conn = pool.getConnection()) {
-			conn.createStatement().execute("CREATE TABLE IF NOT EXISTS plurality (player VARCHAR(64) PRIMARY KEY, server VARCHAR(64) NOT NULL);");
+			conn.createStatement().execute("CREATE TABLE IF NOT EXISTS %s (player VARCHAR(64) PRIMARY KEY, server VARCHAR(64) NOT NULL);".formatted(table));
 		}
 	}
 

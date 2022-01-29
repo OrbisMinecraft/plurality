@@ -1,6 +1,5 @@
 package net.orbismc.plurality;
 
-import com.google.common.reflect.TypeToken;
 import com.google.inject.Inject;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
@@ -8,10 +7,8 @@ import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
-import com.velocitypowered.api.proxy.server.RegisteredServer;
 import net.orbismc.plurality.storage.Storage;
 import ninja.leaping.configurate.ConfigurationNode;
-import ninja.leaping.configurate.objectmapping.ObjectMappingException;
 import ninja.leaping.configurate.yaml.YAMLConfigurationLoader;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -21,7 +18,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.Optional;
 
 @Plugin(
 		id = "plurality",
@@ -102,7 +98,8 @@ public class Plurality {
 			if (storageDriver == null) throw new IllegalStateException("Invalid configuration file semantics");
 
 			final var storage = Storage.getDriver(this, storageDriver);
-			if (storage.isEmpty()) throw new IllegalStateException("Unknown storage driver %s".formatted(storageDriver));
+			if (storage.isEmpty())
+				throw new IllegalStateException("Unknown storage driver %s".formatted(storageDriver));
 			this.storage = storage.get();
 			this.storage.init(storageNode);
 		} catch (Exception e) {

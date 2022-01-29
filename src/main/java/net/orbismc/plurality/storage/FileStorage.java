@@ -1,6 +1,5 @@
 package net.orbismc.plurality.storage;
 
-import com.google.common.reflect.TypeToken;
 import com.velocitypowered.api.proxy.Player;
 import net.orbismc.plurality.Plurality;
 import ninja.leaping.configurate.ConfigurationNode;
@@ -9,7 +8,6 @@ import org.jetbrains.annotations.NotNull;
 import org.yaml.snakeyaml.DumperOptions;
 
 import java.io.*;
-import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Optional;
 

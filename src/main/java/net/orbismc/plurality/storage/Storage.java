@@ -3,10 +3,8 @@ package net.orbismc.plurality.storage;
 import com.velocitypowered.api.proxy.Player;
 import net.orbismc.plurality.Plurality;
 import ninja.leaping.configurate.ConfigurationNode;
-import ninja.leaping.configurate.objectmapping.ObjectMappingException;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
 import java.util.Optional;
 
 /**

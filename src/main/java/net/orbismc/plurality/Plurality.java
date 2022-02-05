@@ -27,6 +27,7 @@ import java.nio.file.Path;
 		id = "plurality",
 		name = "Plurality",
 		version = BuildConstants.VERSION,
+		authors = {"lmichaelis"},
 		description = "A Velocity plugin that puts players into the same server they left previously."
 )
 public class Plurality {

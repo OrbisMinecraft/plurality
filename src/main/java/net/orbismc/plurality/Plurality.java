@@ -79,22 +79,7 @@ public class Plurality {
 	}
 
 	private void loadConfiguration() {
-		final var directory = this.configurationDirectory.toFile();
-		if (!directory.exists() && !directory.mkdirs())
-			throw new IllegalStateException("Failed to create configuration directory.");
-
-		final var file = new File(directory, "config.yml");
-		if (!file.exists()) PluralityConfig.saveDefaultConfiguration(file.toPath());
-
-		ConfigurationNode config;
-		try {
-			config = YAMLConfigurationLoader.builder()
-					.setSource(() -> new BufferedReader(new FileReader(file)))
-					.build()
-					.load();
-		} catch (IOException e) {
-			throw new IllegalStateException("Failed to load configuration file.");
-		}
+		final var config = PluralityConfig.load(this.configurationDirectory.resolve("config.yml").toFile());
 
 		try {
 			final var storageNode = config.getNode("storage");

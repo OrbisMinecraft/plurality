@@ -12,15 +12,9 @@ import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import net.orbismc.plurality.storage.Storage;
-import ninja.leaping.configurate.ConfigurationNode;
-import ninja.leaping.configurate.yaml.YAMLConfigurationLoader;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.nio.file.Path;
 
 @Plugin(

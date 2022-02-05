@@ -15,7 +15,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
 
 /**
  * Configuration data for <i>Plurality</i>-
@@ -23,6 +22,7 @@ import java.nio.file.Path;
 public class PluralityConfig {
 	/**
 	 * Loads the configuration from a file.
+	 *
 	 * @param file The configuration file to load from.
 	 * @return The configuration
 	 */

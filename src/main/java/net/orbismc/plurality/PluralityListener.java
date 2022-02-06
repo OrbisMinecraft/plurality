@@ -7,6 +7,7 @@ package net.orbismc.plurality;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.DisconnectEvent;
 import com.velocitypowered.api.event.player.PlayerChooseInitialServerEvent;
+import com.velocitypowered.api.event.player.ServerConnectedEvent;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -53,12 +54,12 @@ public class PluralityListener {
 	}
 
 	@Subscribe
-	public void onDisconnect(final @NotNull DisconnectEvent event) {
+	public void onConnected(final @NotNull ServerConnectedEvent event) {
 		final var player = event.getPlayer();
 		final var server = player.getCurrentServer();
 
 		if (server.isEmpty()) {
-			plugin.getLogger().error("Could not determine the last server {} joined!", player.getUsername());
+			plugin.getLogger().error("Could not determine the server {} joined!", player.getUsername());
 			return;
 		}
 

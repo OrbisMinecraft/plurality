@@ -5,7 +5,6 @@
 package net.orbismc.plurality;
 
 import com.velocitypowered.api.event.Subscribe;
-import com.velocitypowered.api.event.connection.DisconnectEvent;
 import com.velocitypowered.api.event.player.PlayerChooseInitialServerEvent;
 import com.velocitypowered.api.event.player.ServerConnectedEvent;
 import org.jetbrains.annotations.NotNull;
@@ -33,18 +32,20 @@ public class PluralityListener {
 					plugin.getLogger().error("Could not find a server in which to put {}!", player.getUsername());
 					return null;
 				} else {
-					plugin.getLogger().warn("{} was previously connected to {} which does not exist any more. Moving them into {}.",
-							player.getUsername(),
-							lastServer.get(),
-							defaultServer.get()
-					);
+					plugin.getLogger()
+							.warn("{} was previously connected to {} which does not exist any more. Moving them into {}.",
+									player.getUsername(),
+									lastServer.get(),
+									defaultServer.get()
+							);
 
 					return defaultServer.get();
 				}
 			});
 
 			if (targetServer != null) {
-				plugin.getLogger().info("Connecting {} to previously left server {}", player.getUsername(), lastServer.get());
+				plugin.getLogger()
+						.info("Connecting {} to previously left server {}", player.getUsername(), lastServer.get());
 			}
 
 			event.setInitialServer(targetServer);
@@ -56,13 +57,8 @@ public class PluralityListener {
 	@Subscribe
 	public void onConnected(final @NotNull ServerConnectedEvent event) {
 		final var player = event.getPlayer();
-		final var server = player.getCurrentServer();
+		final var server = event.getServer();
 
-		if (server.isEmpty()) {
-			plugin.getLogger().error("Could not determine the server {} joined!", player.getUsername());
-			return;
-		}
-
-		plugin.getStorage().setLastServer(player, server.get().getServer().getServerInfo().getName());
+		plugin.getStorage().setLastServer(player, server.getServerInfo().getName());
 	}
 }

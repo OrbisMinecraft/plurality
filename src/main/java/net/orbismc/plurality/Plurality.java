@@ -25,14 +25,12 @@ import java.nio.file.Path;
 		description = "A Velocity plugin that puts players into the same server they left previously."
 )
 public class Plurality {
+	public String rootHostName;
 	private Storage storage;
-
 	@Inject
 	private Logger logger;
-
 	@Inject
 	private ProxyServer proxy;
-
 	@Inject
 	@DataDirectory
 	private Path configurationDirectory;
@@ -79,13 +77,16 @@ public class Plurality {
 		try {
 			final var storageNode = config.getNode("storage");
 			final var storageDriver = storageNode.getNode("method").getString();
+			final var rootHostName = config.getNode("rootHostName").getString();
 			if (storageDriver == null) throw new IllegalStateException("Invalid configuration file semantics");
 
 			final var storage = Storage.getDriver(this, storageDriver);
-			if (storage.isEmpty())
+			if (storage.isEmpty()) {
 				throw new IllegalStateException("Unknown storage driver %s".formatted(storageDriver));
+			}
 			this.storage = storage.get();
 			this.storage.init(storageNode);
+			this.rootHostName = rootHostName;
 		} catch (Exception e) {
 			throw new IllegalStateException("Invalid configuration file semantics", e);
 		}

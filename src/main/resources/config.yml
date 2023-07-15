@@ -2,3 +2,4 @@ storage:
   method: file # or mysql
   # url: 'jdbc:mariadb://localhost/plurality?user=plurality&password=plurality'
   # table: 'plurality' # The name of the table to create. Only relevant for the MySQL storage driver (default: plurality)
+rootHostName: myserver.com

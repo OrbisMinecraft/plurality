@@ -5,24 +5,43 @@
 package net.orbismc.plurality;
 
 import com.velocitypowered.api.event.Subscribe;
+import com.velocitypowered.api.event.connection.PreLoginEvent;
 import com.velocitypowered.api.event.player.PlayerChooseInitialServerEvent;
 import com.velocitypowered.api.event.player.ServerConnectedEvent;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.HashMap;
 
 /**
  * The main Velocity event listener class of <i>Plurality</i>.
  */
 public class PluralityListener {
 	private final Plurality plugin;
+	private final HashMap<String, Boolean> dontResolveOldServer = new HashMap<>();
 
 	public PluralityListener(final @NotNull Plurality plugin) {
 		this.plugin = plugin;
 	}
 
 	@Subscribe
+	public void onPreLogin(final @NotNull PreLoginEvent event) {
+		final var virtualHost = event.getConnection().getVirtualHost();
+		if (virtualHost.isPresent() && !virtualHost.get().getHostName().startsWith(plugin.rootHostName)) {
+			dontResolveOldServer.put(event.getUsername(), true);
+			return;
+		}
+
+		dontResolveOldServer.put(event.getUsername(), false);
+	}
+
+	@Subscribe
 	public void onChooseServer(final @NotNull PlayerChooseInitialServerEvent event) {
 		final var lastServer = plugin.getStorage().getLastServer(event.getPlayer());
 		final var player = event.getPlayer();
+
+		if (dontResolveOldServer.getOrDefault(player.getUsername(), false)) {
+			return;
+		}
 
 		if (lastServer.isPresent()) {
 			final var targetServer = plugin.getProxy().getServer(lastServer.get()).orElseGet(() -> {
